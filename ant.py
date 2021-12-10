@@ -7,8 +7,8 @@ with open('db.yml', 'r') as file:
 
 app = Flask(__name__)
 
-@app.route('/api/v1/names/<int:anilist_id>')
-def v1_names(anilist_id):
+@app.route('/name-lookup/<int:anilist_id>.json')
+def name_lookup(anilist_id):
     if anilist_id in db:
         r = Response(json.dumps(db[anilist_id]))
         r.headers['Content-Type'] = 'application/json'
