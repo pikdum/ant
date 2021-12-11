@@ -1,0 +1,27 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.10"
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2.5.0        
+    - name: Install dependencies
+      run: |
+        npm install -g surge
+        pip3 install -r requirements.txt
+    - name: Build application
+      run: python3 freeze.py
+    - name: Deploy application
+      run: |
+        cd build
+        surge . ant-v1.surge.sh
